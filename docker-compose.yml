@@ -1,0 +1,13 @@
+# Code stays on the host. This container is only Apache and PHP.
+# MySQL stays on the Mac. In the Laravel .env, set DB_HOST=host.docker.internal
+# so PHP reaches the Mac. 127.0.0.1 inside the container is the container itself.
+services:
+  web:
+    build: .
+    # 8080 is already Emberforge on this Mac.
+    ports:
+      - "${INNLIGHT_PORT:-8088}:80"
+    volumes:
+      - ./theinnlight:/var/www/html
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
